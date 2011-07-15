@@ -1,15 +1,25 @@
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-from pyPdf import PdfFileWriter, PdfFileReader
+import osv
+import pooler
+from report.report_sxw import report_sxw
+from tools.safe_eval import safe_eval
+
 import time
 import base64
 import logging
 
-import pooler
-from report.report_sxw import report_sxw
-from tools.safe_eval import safe_eval
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
+try:
+    from pyPdf import PdfFileWriter, PdfFileReader
+except ImportError:
+    raise osv.except_osv(
+        "agaplan_terms_and_conditions needs pyPdf",
+        """To install the module "agaplan_terms_and_conditions" please ask your administrator to install the pyPdf package."""
+    )
+
 
 # We store the original function
 openerp_create_single_pdf = report_sxw.create_single_pdf
@@ -58,7 +68,7 @@ def create_single_pdf(self, cr, uid, ids, data, report_xml, context=None):
             }
             # User has specified a condition, check it and return res when not met
             if not safe_eval(rule.condition, env):
-                log.debug("Term condition not met !") 
+                log.debug("Term condition not met !")
                 continue
             else:
                 log.debug("Term condition met !")
