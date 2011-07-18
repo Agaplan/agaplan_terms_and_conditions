@@ -21,7 +21,7 @@ class term_rule(osv.osv):
         'term_id' : fields.many2one('term.term','Term', required=True),
         'company_id' : fields.many2one('res.company','Company'),
         'report_id' : fields.many2one('ir.actions.report.xml', 'Report', required=True),
-        'report_name': fields.related('report_id','report_name', type="char", string='Report Name', readonly=True),
+        'report_name': fields.related('report_id','report_name', type="char", size=64, string='Report Name', readonly=True),
         'condition' : fields.char('Condition', size=128, help='condition on when to print the therm'),
     }
 
