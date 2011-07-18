@@ -35,6 +35,10 @@ def create_single_pdf(self, cr, uid, ids, data, report_xml, context=None):
 
     # Check conditions to add or not
     rule_obj = pool.get('term.rule')
+    if not rule_obj:
+        # Module is not installed
+        return res
+
     rule_ids = rule_obj.search(cr, uid, [
         ('report_name','=',report_xml.report_name),
     ])
