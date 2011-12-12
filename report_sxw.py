@@ -29,6 +29,7 @@ def create_single_pdf(self, cr, uid, ids, data, report_xml, context=None):
 
     res = openerp_create_single_pdf(self, cr, uid, ids, data, report_xml, context)
     if report_xml.report_type != 'pdf':
+        log.warn("report_type was not what we expected (%s) thus we return regular result.", report_xml.report_type)
         return res
 
     pool = pooler.get_pool(cr.dbname)
