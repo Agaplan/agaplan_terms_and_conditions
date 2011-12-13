@@ -1,4 +1,4 @@
-import osv
+from osv import osv
 import pooler
 from report.report_sxw import report_sxw
 from tools.safe_eval import safe_eval
