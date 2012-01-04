@@ -86,19 +86,19 @@ def create_single_pdf(self, cr, uid, ids, data, report_xml, context=None):
     for rule in valid_rules:
         if rule.term_id.mode == 'begin':
             att = PdfFileReader( StringIO(base64.decodestring(rule.term_id.pdf)) )
-            [ output.addPage(page) for page in att.pages ]
+            map(output.addPage, att.pages)
 
     for page in reader.pages:
         output.addPage( page )
         for rule in valid_rules:
             if rule.term_id.mode == 'duplex':
                 att = PdfFileReader( StringIO(base64.decodestring(rule.term_id.pdf)) )
-                [ output.addPage(page) for page in att.pages ]
+                map(output.addPage, att.pages)
 
     for rule in valid_rules:
         if rule.term_id.mode == 'end':
             att = PdfFileReader( StringIO(base64.decodestring(rule.term_id.pdf)) )
-            [ output.addPage(page) for page in att.pages ]
+            map(output.addPage, att.pages)
 
     buf = StringIO()
     output.write(buf)
